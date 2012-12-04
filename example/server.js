@@ -4,7 +4,7 @@ var http = require('http'),
 var scheduler = unison.scheduler.create({
   R: 3,
   W: 3,
-  jobTimeout: 30000
+  jobTimeout: 3000
 });
 
 var job = scheduler.job.create({
