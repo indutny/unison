@@ -1,6 +1,12 @@
 {
   "name": "unison",
   "version": "0.0.0",
-
-  "author": "Fedor Indutny <fedor.indutny@gmail.com>"
+  "author": "Fedor Indutny <fedor.indutny@gmail.com>",
+  "main": "lib/unison",
+  "dependencies": {
+    "redis": "~0.8.2",
+    "connect": "~2.7.0",
+    "express": "~3.0.3",
+    "async": "~0.1.22"
+  }
 }
