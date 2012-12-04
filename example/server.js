@@ -2,7 +2,6 @@ var http = require('http'),
     unison = require('..');
 
 var scheduler = unison.scheduler.create({
-  N: 5,
   R: 3,
   W: 3,
   jobTimeout: 30000
@@ -20,12 +19,14 @@ var job = scheduler.job.create({
 });
 scheduler.add(job);
 
+/*
 job.index = 0;
 for (var i = 0; i < 3; i++) {
-  job.addSolution([1,2,3,4,5], function(err) {
+  job.addSolution('rand', [1,2,3,4,5], function(err) {
     console.log(err);
   });
 }
+*/
 
 scheduler.on('complete', function(job, out) {
   console.log('Job %s done:', job.id);

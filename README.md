@@ -8,7 +8,6 @@ Work in progress, nothing to see here yet.
 var unison = require('unison');
 
 var scheduler = unison.scheduler.create({
-  N: 5,
   R: 3,
   W: 3
 });
