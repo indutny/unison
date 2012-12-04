@@ -19,21 +19,17 @@ var job = scheduler.job.create({
 });
 scheduler.add(job);
 
-/*
-job.index = 0;
-for (var i = 0; i < 3; i++) {
-  job.addSolution('rand', [1,2,3,4,5], function(err) {
-    console.log(err);
-  });
-}
-*/
-
 scheduler.on('complete', function(job, out) {
-  console.log('Job %s done:', job.id);
+  console.log('Job %s done:', job);
   console.log(out);
 });
 
-http.createServer(scheduler.middleware()).listen(8000, function() {
+http.createServer(
+  scheduler.middleware()
+).listen(8000, function() {
   var addr = this.address();
   console.log('Unison server is listening on %s:%d', addr.address, addr.port);
+
+  // Just one line!
+  unison.client.connect('http://localhost:8000/unison');
 });
