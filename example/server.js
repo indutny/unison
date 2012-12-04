@@ -4,7 +4,8 @@ var http = require('http'),
 var scheduler = unison.scheduler.create({
   N: 5,
   R: 3,
-  W: 3
+  W: 3,
+  jobTimeout: 30000
 });
 
 var job = scheduler.job.create({
@@ -19,8 +20,16 @@ var job = scheduler.job.create({
 });
 scheduler.add(job);
 
-job.on('complete', function(out) {
-  console.log('Job done', out);
+job.index = 0;
+for (var i = 0; i < 3; i++) {
+  job.addSolution([1,2,3,4,5], function(err) {
+    console.log(err);
+  });
+}
+
+scheduler.on('complete', function(job, out) {
+  console.log('Job %s done:', job.id);
+  console.log(out);
 });
 
 http.createServer(scheduler.middleware()).listen(8000, function() {
