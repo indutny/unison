@@ -1,13 +1,15 @@
 # Unison
 
-Work in progress, nothing to see here yet.
+Engine for distributed computation in untrusted environment.
 
 ## Example
 
+Server:
 ```javascript
 var unison = require('unison');
 
 var scheduler = unison.scheduler.create({
+  prefix: '/unison',
   R: 3,
   W: 3
 });
@@ -28,9 +30,14 @@ scheduler.add(job);
 scheduler.remove(job.id); // or scheduler.remove(job)
 
 // This event will be emitted upon job completion
-job.on('complete', function(out) {
+job.on('complete', function(job, out) {
 });
 
 // And you can use this scheduler in your middleware
 app.use(scheduler.middleware());
+```
+
+Client:
+```javascript
+unison.client.connect('http://server/unison');
 ```

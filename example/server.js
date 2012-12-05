@@ -1,9 +1,16 @@
 var http = require('http'),
+    cluster = require('cluster'),
     unison = require('..');
 
+if (cluster.isMaster) {
+  for (var i = 0; i < 3; i++) {
+    cluster.fork();
+  }
+}
+
 var scheduler = unison.scheduler.create({
-  R: 3,
-  W: 3,
+  R: 10,
+  W: 10,
   jobTimeout: 3000
 });
 
@@ -20,8 +27,10 @@ var job = scheduler.job.create({
 scheduler.add(job);
 
 scheduler.on('complete', function(job, out) {
-  console.log('Job %s done:', job);
-  console.log(out);
+  if (cluster.isMaster) {
+    console.log('Job %s done:', job);
+    console.log(out);
+  }
 });
 
 http.createServer(
